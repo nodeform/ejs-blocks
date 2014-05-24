@@ -218,17 +218,6 @@ function lookup(root, partial, options){
   partial = resolve(root, dir, base, 'index'+ext);
   if (exists(partial)) return options.cache ? cache[key] = partial : partial;
 
-  // Try relative
-  // filename is set by ejs engine
-  relativeRoot = dirname(options.filename);
-  partial = resolve(relativeRoot, dir, base+ext);
-  if (exists(partial)) return options.cache ? cache[key] = partial : partial;
-
-  // Try relative index
-  // ex: for partial('user') look for /root/user/index.ejs
-  partial = resolve(relativeRoot, dir, base, 'index'+ext);
-  if (exists(partial)) return options.cache ? cache[key] = partial : partial;
-
   // FIXME:
   // * there are other path types that Express 2.0 used to support but
   //   the structure of the lookup involved View class methods that we
@@ -314,8 +303,15 @@ function partial(view, options){
   name = options.as || resolveObjectName(view);
 
   // find view
-  var root = (options.settings.views || process.cwd() + '/app/views')
-    , file = lookup(root, view, options)
+  if (view.length > 0 && view[0] === path.sep) {
+    // if view name is an absolute path, find it relative to view options:
+    var root = (options.settings.views || process.cwd() + '/app/views');
+  } else {
+    // otherwise, find view path relative to current template:
+    // filename is set by ejs engine
+    var root = dirname(options.filename);
+  }
+  var file = lookup(root, view, options)
     , key = file + ':string';
   if (!file) {
     throw new Error('Could not find partial ' + view);
