@@ -1,9 +1,4 @@
-# ejs-locals
-
-## Status
-
-This library is *unmaintained*, sorry. I recommend a fully-featured and actively-maintained 
-alternative such as https://github.com/linkedin/dustjs or https://github.com/baryshev/ect
+# ejs-blocks
 
 ## About
 
@@ -13,7 +8,7 @@ Previously also offered `include` but you should use EJS 0.8.x's own method for 
 
 ## Installation
 
-    $ npm install ejs-locals --save
+    $ npm install ejs-blocks --save
 
 (`--save` automatically writes to your `package.json` file, tell your friends)
 
@@ -56,10 +51,10 @@ And a layout, `boilerplate.ejs`:
 When rendered by an Express 3.0 app:
 
     var express = require('express')
-      , engine = require('ejs-locals')
+      , engine = require('ejs-blocks')
       , app = express();
 
-    // use ejs-locals for all ejs templates:
+    // use ejs-blocks for all ejs templates:
     app.engine('ejs', engine);
 
     app.set('views',__dirname + '/views');
@@ -160,7 +155,7 @@ And/or pass `_layoutFile: true` in the options when you call `res.render(...)`.
 
 ## Whither Include?
 
-Previous versions of this library had an `include` function. This is now supported directly by EJS, albeit with a different syntax. For `ejs-locals` 1.0+ simply do:
+Previous versions of this library had an `include` function. This is now supported directly by EJS, albeit with a different syntax. For `ejs-blocks` 1.0+ simply do:
 
 ### `<% include path/view %>`
 
