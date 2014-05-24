@@ -38,8 +38,8 @@ var ejs = require('ejs')
  *    var express = require('express')
  *      , app = express();
  *
- *    // use ejs-locals for all ejs templates:
- *    app.engine('ejs', require('ejs-locals'));
+ *    // use ejs-blocks for all ejs templates:
+ *    app.engine('ejs', require('ejs-blocks'));
  *
  *    // render 'index' into 'boilerplate':
  *    app.get('/',function(req,res,next){
@@ -172,11 +172,11 @@ function resolveObjectName(view){
 /**
  * Lookup partial path from base path of current template:
  *
- *   - partial `_<name>`
+ *   - partial `<name>`
  *   - any `<name>/index`
  *   - non-layout `../<name>/index`
  *   - any `<root>/<name>`
- *   - partial `<root>/_<name>`
+ *   - partial `<root>/<name>`
  *
  * Options:
  *
@@ -205,18 +205,29 @@ function lookup(root, partial, options){
 
   // _ prefix takes precedence over the direct path
   // ex: for partial('user') look for /root/_user.ejs
-  partial = resolve(root, dir,'_'+base+ext);
-  if( exists(partial) ) return options.cache ? cache[key] = partial : partial;
+  partial = resolve(root, dir, '_'+base+ext);
+  if (exists(partial)) return options.cache ? cache[key] = partial : partial;
 
   // Try the direct path
   // ex: for partial('user') look for /root/user.ejs
   partial = resolve(root, dir, base+ext);
-  if( exists(partial) ) return options.cache ? cache[key] = partial : partial;
+  if (exists(partial)) return options.cache ? cache[key] = partial : partial;
 
   // Try index
   // ex: for partial('user') look for /root/user/index.ejs
   partial = resolve(root, dir, base, 'index'+ext);
-  if( exists(partial) ) return options.cache ? cache[key] = partial : partial;
+  if (exists(partial)) return options.cache ? cache[key] = partial : partial;
+
+  // Try relative
+  // filename is set by ejs engine
+  relativeRoot = dirname(options.filename);
+  partial = resolve(relativeRoot, dir, base+ext);
+  if (exists(partial)) return options.cache ? cache[key] = partial : partial;
+
+  // Try relative index
+  // ex: for partial('user') look for /root/user/index.ejs
+  partial = resolve(relativeRoot, dir, base, 'index'+ext);
+  if (exists(partial)) return options.cache ? cache[key] = partial : partial;
 
   // FIXME:
   // * there are other path types that Express 2.0 used to support but
@@ -292,23 +303,23 @@ function partial(view, options){
   }
 
   // merge locals into options
-  if( locals )
+  if (locals)
     options.__proto__ = locals;
 
   // merge app locals into options
-  for(var k in this)
+  for (var k in this)
     options[k] = options[k] || this[k];
 
   // extract object name from view
   name = options.as || resolveObjectName(view);
 
-  // find view, relative to this filename
-  // (FIXME: filename is set by ejs engine, other engines may need more help)
-  var root = dirname(options.filename)
+  // find view
+  var root = (options.settings.views || process.cwd() + '/app/views')
     , file = lookup(root, view, options)
     , key = file + ':string';
-  if( !file )
+  if (!file) {
     throw new Error('Could not find partial ' + view);
+  }
 
   // read view
   var source = options.cache
