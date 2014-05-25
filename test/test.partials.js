@@ -24,17 +24,17 @@ app.get('/',function(req,res,next){
 app.get('/blog',function(req,res,next){
   res.render('blog/home.ejs', {
     _layoutFile:false,
-    user: { name: 'Tom' }, 
-    posts: [ 
-      { 
-        text: '1', 
-        comments: [ { text: '1.1' }, { text: '1.2' } ] 
-      }, 
-      { 
-        text: '2', 
-        comments: [ { text: '2.1' }, { text: '2.2' }, { text: '2.3' } ] 
-      } 
-    ]    
+    user: { name: 'Tom' },
+    posts: [
+      {
+        text: '1',
+        comments: [ { text: '1.1' }, { text: '1.2' } ]
+      },
+      {
+        text: '2',
+        comments: [ { text: '2.1' }, { text: '2.2' }, { text: '2.3' } ]
+      }
+    ]
   })
 })
 
@@ -108,6 +108,10 @@ app.get('/with-include-there',function(req,res,next){
 
 app.get('/with-blocks',function(req,res,next){
   res.render('with-blocks.ejs',{_layoutFile:false});
+})
+
+app.get('/with-functional-blocks',function(req,res,next){
+  res.render('with-functional-blocks.ejs',{_layoutFile:false});
 })
 
 app.get('/deep-inheritance',function(req,res,next){
@@ -385,6 +389,18 @@ describe('app',function(){
         .end(function(res){
           res.should.have.status(200);
           res.body.should.equal('<li><a href="hello.html">there</a></li><p>What\'s up?</p>© 2012');
+          done();
+        })
+    })
+  })
+
+  describe('GET /with-functional-blocks',function(){
+    it('should arrange blocks into layout-with-functional-blocks.ejs when rendering with-functional-blocks.ejs',function(done){
+      request(app)
+        .get('/with-functional-blocks')
+        .end(function(res){
+          res.should.have.status(200);
+          res.body.should.equal('<li><a href="hello.html">there</a></li><p>What\'s up?</p>'+"\n"+'© 2012');
           done();
         })
     })

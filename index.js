@@ -440,6 +440,12 @@ function block(name, html) {
     // non-existent block we'll get a new one
     blk = this[name] = new Block();
   }
+
+  // when html is a functional call
+  if (typeof html === 'function') {
+    html = html();
+  }
+
   if (html) {
     blk.append(html);
   }
