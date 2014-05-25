@@ -428,7 +428,7 @@ Block.prototype = {
  * as well as render it when included in a parent template.
  *
  * @param  {String} name
- * @param  {String} html
+ * @param  {String|Function} html
  * @return {Block}
  * @api private
  */
@@ -441,8 +441,7 @@ function block(name, html) {
     blk = this[name] = new Block();
   }
 
-  // when html is a functional call
-  if (typeof html === 'function') {
+  if ('function' == typeof html) {
     html = html();
   }
 

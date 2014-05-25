@@ -110,8 +110,8 @@ app.get('/with-blocks',function(req,res,next){
   res.render('with-blocks.ejs',{_layoutFile:false});
 })
 
-app.get('/with-functional-blocks',function(req,res,next){
-  res.render('with-functional-blocks.ejs',{_layoutFile:false});
+app.get('/with-function-blocks',function(req,res,next){
+  res.render('with-function-blocks.ejs',{_layoutFile:false});
 })
 
 app.get('/deep-inheritance',function(req,res,next){
@@ -394,13 +394,13 @@ describe('app',function(){
     })
   })
 
-  describe('GET /with-functional-blocks',function(){
-    it('should arrange blocks into layout-with-functional-blocks.ejs when rendering with-functional-blocks.ejs',function(done){
+  describe('GET /with-function-blocks',function(){
+    it('should arrange blocks into layout-with-function-blocks.ejs when rendering with-function-blocks.ejs',function(done){
       request(app)
-        .get('/with-functional-blocks')
+        .get('/with-function-blocks')
         .end(function(res){
           res.should.have.status(200);
-          res.body.should.equal('<li><a href="hello.html">there</a></li><p>What\'s up?</p>'+"\n"+'© 2012');
+          res.body.should.equal('<li><a href="hello.html">there</a></li><p>What\'s up?</p>'+"\n\n"+'© 2012'+"\n");
           done();
         })
     })
