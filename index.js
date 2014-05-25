@@ -305,7 +305,8 @@ function partial(view, options){
   // find view
   if (view.length > 0 && view[0] === path.sep) {
     // if view name is an absolute path, find it relative to view options:
-    var root = (options.settings.views || process.cwd() + '/app/views');
+    var viewPath = options.settings.views || process.cwd() + '/app/views';
+    var root = join(viewPath, view.slice(1));
   } else {
     // otherwise, find view path relative to current template:
     // filename is set by ejs engine
