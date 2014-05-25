@@ -2,7 +2,7 @@
 
 ## About
 
-Express 3.x `layout`, `partial` and `block` template functions for the EJS template engine. 
+Express 3.x `layout`, `partial` and `block` template functions for the EJS template engine.
 
 Previously also offered `include` but you should use EJS 0.8.x's own method for that now.
 
@@ -54,10 +54,10 @@ When rendered by an Express 3.0 app:
       , engine = require('ejs-blocks')
       , app = express();
 
+    app.set('views',__dirname + '/views');
+
     // use ejs-blocks for all ejs templates:
     app.engine('ejs', engine);
-
-    app.set('views',__dirname + '/views');
     app.set('view engine', 'ejs'); // so you can render('index')
 
     // render 'index' into 'boilerplate':
@@ -172,8 +172,8 @@ The blocks idea and syntax comes from Aseem Kishore's [express-blocks](https://g
 
 (The MIT License)
 
-Copyright (c) 2012 Robert Sk&ouml;ld &lt;robert@publicclass.se&gt;
-Copyright (c) 2012 Tom Carden &lt;tom@tom-carden.co.uk&gt;
+* Copyright (c) 2012 Robert Sk&ouml;ld &lt;robert@publicclass.se&gt;
+* Copyright (c) 2012 Tom Carden &lt;tom@tom-carden.co.uk&gt;
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
