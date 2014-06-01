@@ -424,7 +424,7 @@ describe('app',function(){
         .get('/deep-inheritance-blocks')
         .end(function(res){
           res.should.have.status(200);
-          res.body.should.equal('<html><head><title>ejs-locals</title><script src="gc.js"></script>\n<script src="c.js"></script><link rel="stylesheet" href="gc.css" />\n<link rel="stylesheet" href="c.css" /></head><body><i>I am grandchild content.</i><b>I am child content.</b><u>I am parent content.</u></body></html>');
+          res.body.should.equal('<html><head><title>ejs-locals</title><script src="gc.js" data-main="/main.js"></script>\n<script src="c.js"></script><link rel="stylesheet" href="gc.css" />\n<link rel="stylesheet" href="c.css" /></head><body><i>I am grandchild content.</i>'+"\n"+'<b>I am child content.</b><u>I am parent content.</u></body></html>');
           done();
         })
     })

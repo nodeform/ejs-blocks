@@ -452,17 +452,30 @@ function block(name, html) {
 }
 
 // bound to scripts Block in renderFile
-function script(path, type) {
+function script(path, type, attrs) {
   if (path) {
-    this.append('<script src="'+path+'"'+(type ? 'type="'+type+'"' : '')+'></script>');
+    attrString = ''
+    if (attrs) {
+      for (attr in attrs) {
+        attrString += ' ' + attr + '="' + attrs[attr] + '"';
+      }
+    }
+    this.append('<script src="'+path+'"'+(type ? 'type="'+type+'"' : '')+attrString+'></script>');
   }
   return this;
 }
 
 // bound to stylesheets Block in renderFile
-function stylesheet(path, media) {
+function stylesheet(path, media, attrs) {
   if (path) {
-    this.append('<link rel="stylesheet" href="'+path+'"'+(media ? 'media="'+media+'"' : '')+' />');
+    attrString = ''
+    if (attrs) {
+      for (attr in attrs) {
+        attrString += ' ' + attr + '="' + attrs[attr] + '"';
+      }
+    }
+
+    this.append('<link rel="stylesheet" href="'+path+'"'+(media ? 'media="'+media+'"' : '')+attrString+' />');
   }
   return this;
 }

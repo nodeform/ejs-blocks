@@ -6,7 +6,7 @@
   ],
   "name": "ejs-blocks",
   "description": "Express 3.x helpers for layouts, partials and blocks.",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "repository": {
     "type": "git",
     "url": "git://github.com/nodeform/ejs-blocks.git"
